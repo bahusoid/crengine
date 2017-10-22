@@ -1300,8 +1300,8 @@ void renderFinalBlock( ldomNode * enode, LFormattedText * txform, RenderRectAcce
             css_style_ref_t style = parent->getStyle();
             lUInt32 cl = style->color.type!=css_val_color ? 0xFFFFFFFF : style->color.value;
             lUInt32 bgcl = style->background_color.type!=css_val_color ? 0xFFFFFFFF : style->background_color.value;
-            if(!enode->getParentNode()->getParentNode()->isNull())
-                if((enode->getParentNode()->getParentNode()->getStyle()->background_color.value)==
+            if(!ISNULL(parent->getParentNode()))
+                if((parent->getParentNode()->getStyle()->background_color.value)==
                         lInt32(bgcl))
                     bgcl=0xFFFFFFFF;
 
@@ -1596,7 +1596,7 @@ int pagebreakhelper(ldomNode *enode,int width)
     if (flag==RN_SPLIT_BEFORE_ALWAYS){
         ldomNode *node=enode;
         int top=0;
-        while (!node->isNull()) {
+        while (!ISNULL(node)) {
             top+=lengthToPx( node->getStyle()->margin[2], width, em ) +
                  lengthToPx( node->getStyle()->padding[2], width, em ) +
                  measureBorder(node,0);

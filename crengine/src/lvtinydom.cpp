@@ -11483,8 +11483,8 @@ int ldomNode::renderFinalBlock(  LFormattedTextRef & frmtext, RenderRectAccessor
     cache.set( this, f );
     bool flg=gFlgFloatingPunctuationEnabled;
     if (this->getNodeName()=="th"||this->getNodeName()=="td"||
-            (!this->getParentNode()->isNull()&&this->getParentNode()->getNodeName()=="td")||
-            (!this->getParentNode()->isNull()&&this->getParentNode()->getNodeName()=="th"))
+            (!ISNULL(this->getParentNode())&&this->getParentNode()->getNodeName()=="td")||
+            (!ISNULL(this->getParentNode())&&this->getParentNode()->getNodeName()=="th"))
     {
         gFlgFloatingPunctuationEnabled=false;
     }

@@ -40,6 +40,9 @@
 #include "props.h"
 #include "bookformats.h"
 
+/// Helper for NULL reference check (introduced to replace unsafe this == NULL check inside isNull() instance method)
+#define ISNULL(arg)(arg == NULL || arg->isNull())
+
 #define LXML_NO_DATA       0 ///< to mark data storage record as empty
 #define LXML_ELEMENT_NODE  1 ///< element node
 #define LXML_TEXT_NODE     2 ///< text node
@@ -676,8 +679,8 @@ public:
     /// remove node, clear resources
     void destroy();
 
-    /// returns true for invalid/deleted node ot NULL this pointer
-    inline bool isNull() const { return this == NULL || _handle._dataIndex==0; }
+    /// returns true for invalid/deleted node
+    inline bool isNull() const { return _handle._dataIndex==0; }
     /// returns true if node is stored in persistent storage
     inline bool isPersistent() const { return (_handle._dataIndex&2)!=0; }
     /// returns data index of node's registration in document data storage

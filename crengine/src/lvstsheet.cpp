@@ -1909,7 +1909,7 @@ static bool parse_ident( const char * &str, char * ident )
 
 bool LVCssSelectorRule::check( const ldomNode * & node )
 {
-    if (node->isNull() || node->isRoot())
+    if (ISNULL(node) || node->isRoot())
         return false;
     switch (_type)
     {
@@ -1917,7 +1917,7 @@ bool LVCssSelectorRule::check( const ldomNode * & node )
         //
         {
             node = node->getParentNode();
-            if (node->isNull())
+            if (ISNULL(node))
                 return false;
             return node->getNodeId() == _id;
         }
@@ -1928,10 +1928,7 @@ bool LVCssSelectorRule::check( const ldomNode * & node )
             for (;;)
             {
                 node = node->getParentNode();
-		// prevent segfault due to undefined memory address on Ubuntu 17.10 (due to gcc 7.2.0?)
-                if (!node)
-                    return false;
-                if (node->isNull())
+                if (ISNULL(node))
                     return false;
                 if (node->getNodeId() == _id)
                     return true;
